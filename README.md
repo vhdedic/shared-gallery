@@ -2,5 +2,5 @@
 
 ## Configure
 
-- Rename config/example.config.php to config/config.php.
-- Change the key values to the required value.
+- Rename example.config.php to config.php
+- Change values in config.php
