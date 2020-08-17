@@ -6,6 +6,7 @@ class HomeController
 {
     function index()
     {
-        // code...
+        $view = new View;
+        $view->render('layout', 'home', $args = []);
     }
 }

@@ -22,7 +22,10 @@
     <!-- Links -->
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="<?php echo Config::getParams('url'); ?>index.php?page=home&action=index">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo Config::getParams('url'); ?>index.php?page=registration&action=index">Registration</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Login</a>
@@ -32,9 +35,6 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">My Account</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Registration</a>
         </li>
     </ul>
 </nav>
