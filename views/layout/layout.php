@@ -28,7 +28,7 @@
             <a class="nav-link" href="<?php echo Config::getParams('url'); ?>index.php?page=registration&action=index">Registration</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Login</a>
+            <a class="nav-link" href="<?php echo Config::getParams('url'); ?>index.php?page=login&action=index">Login</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Management</a>

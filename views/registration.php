@@ -17,8 +17,8 @@
             <div class="form-group">
                 <label for="confirm_password">Confirm Password:</label>
                 <input type="password" class="form-control" name="confirm_password" required>
+                <a href="<?php echo Config::getParams('url'); ?>?page=login&action=index">Already have an account. Login here.</a>
             </div>
-            <br>
             <button type="submit" class="btn btn-dark" name="submit" >Submit</button>
         </form>
     </div>

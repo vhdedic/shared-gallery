@@ -18,10 +18,34 @@ class User
 
             // Execute the prepared statement
             $sth->execute();
-            /*
+
             header('Location: '.Config::getParams('url').'index.php?page=login&action=index');
             exit();
-            */
+        }
+    }
+
+    public static function loginUser()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $stmt = Database::getInstance()->prepare("SELECT id, username, password FROM users WHERE username = :username");
+
+            $stmt->bindValue(':username', $_POST['username']);
+
+            $stmt->execute();
+
+            $userdata = $stmt->fetch();
+
+            if(!empty($_POST["remember_me"])){
+                setcookie ("remember_username",$_POST["username"],time()+ 1296000);
+            }
+
+            if (password_verify($_POST['password'], $userdata['password'])){
+                $_SESSION['username'] = $userdata['username'];
+                /*
+                header('Location: '.Config::getParams('url').'index.php?page=management&action=index');
+                exit();
+                */
+            }
         }
     }
 }
