@@ -40,11 +40,11 @@ class User
             }
 
             if (password_verify($_POST['password'], $userdata['password'])){
+
                 $_SESSION['username'] = $userdata['username'];
-                /*
+
                 header('Location: '.Config::getParams('url').'index.php?page=management&action=index');
                 exit();
-                */
             }
         }
     }

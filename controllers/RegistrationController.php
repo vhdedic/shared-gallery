@@ -6,8 +6,15 @@ class RegistrationController
 {
     function index()
     {
-        User::registerUser();
-        $view = new View;
-        $view->render('layout', 'registration', $args = []);
+        if (isset($_SESSION['username']))
+        {
+            header('Location: '.Config::getParams('url').'index.php?page=home&action=index');
+            exit();
+
+        } else {
+            User::registerUser();
+            $view = new View;
+            $view->render('layout', 'registration', $args = []);
+        }
     }
 }

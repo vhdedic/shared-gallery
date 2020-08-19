@@ -17,26 +17,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
     <!-- Brand/logo -->
-    <a class="navbar-brand" href="<?php echo Config::getParams('url'); ?>"><?php echo Config::getParams('app_name'); ?></a>
+    <a class="navbar-brand text-light" href="<?php echo Config::getParams('url'); ?>"><?php echo Config::getParams('app_name'); ?></a>
 
     <!-- Links -->
-    <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo Config::getParams('url'); ?>index.php?page=home&action=index">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo Config::getParams('url'); ?>index.php?page=registration&action=index">Registration</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo Config::getParams('url'); ?>index.php?page=login&action=index">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Management</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">My Account</a>
-        </li>
-    </ul>
+    <?php if (isset($_SESSION["username"])){ ?>
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['username']; ?></a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="<?php echo Config::getParams('url'); ?>index.php?page=management&action=index">Management</a>
+                    <a class="dropdown-item" href="<?php echo Config::getParams('url'); ?>index.php?page=myaccount&action=index">My Account</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<?php echo Config::getParams('url'); ?>index.php?page=login&action=logout">Logout</a>
+                </div>
+            </li>
+        </ul>
+<?php    } ?>
 </nav>
 
 <div class="container">
