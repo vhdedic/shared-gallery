@@ -7,6 +7,7 @@ class ManagementController
     function index()
     {
         if (isset($_SESSION['username'])){
+            Image::uploadImage();
             $view = new View;
             $view->render('layout', 'management', $args = []);
 
