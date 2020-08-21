@@ -28,4 +28,15 @@ class Image
             }
         }
     }
+
+    public static function getImages()
+    {
+        $sth = Database::getInstance()->prepare("SELECT images.id, images.image, users.username, users.email FROM images INNER JOIN users ON users.id = images.user_id");
+
+        $sth->execute();
+
+        $images = $sth->fetchAll();
+
+        return $images;
+    }
 }
