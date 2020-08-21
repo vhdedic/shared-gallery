@@ -19,7 +19,7 @@
                         <form method="POST">
                             <input type="hidden" name="id" value="<?php echo $image['id'] ?>">
                             <input type="hidden" name="image" value="<?php echo $image['image'] ?>">
-                            <button type="submit" name="remove" class="btn btn-danger" formaction="">Remove Image</button>
+                            <button type="submit" name="remove" class="btn btn-danger" formaction="<?php echo Config::getParams('url'); ?>index.php?page=management&action=remove">Remove Image</button>
                         </form>
                     </div>
                 <?php endif; ?>

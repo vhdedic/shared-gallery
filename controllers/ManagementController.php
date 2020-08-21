@@ -18,4 +18,11 @@ class ManagementController
             exit();
         }
     }
+
+    function remove()
+    {
+        Image::imageRemove();
+        header('Location: '.Config::getParams('url').'index.php?page=management&action=index');
+        exit();
+    }
 }

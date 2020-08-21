@@ -39,4 +39,19 @@ class Image
 
         return $images;
     }
+
+    public static function imageRemove()
+    {
+        if(isset($_POST['remove'])){
+
+            $image_id = $_POST['id'];
+            $image_name = $_POST['image'];
+
+            $sth = Database::getInstance()->prepare("DELETE FROM images WHERE id=$image_id");
+
+            unlink(ROOT.'uploads/'.$image_name);
+
+            $sth->execute();
+        }
+    }
 }
