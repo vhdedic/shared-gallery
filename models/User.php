@@ -75,4 +75,27 @@ class User
             }
         }
     }
+
+    public static function removeAccount()
+    {
+        if(isset($_POST['remove_account'])){
+
+            $username = $_SESSION['username'];
+
+            $sth = Database::getInstance()->prepare("SELECT image FROM images WHERE user_id = (SELECT id FROM users WHERE username = '$username')");
+
+            $sth->execute();
+            $images = $sth->fetchAll();
+
+            foreach ($images as $image) {
+                unlink(ROOT.'uploads/'.$image['image']);
+            }
+
+            $sth_del = Database::getInstance()->prepare("DELETE FROM users WHERE username = '$username'");
+            $sth_del->execute();
+
+            header('Location: '.Config::getParams('url').'index.php?page=login&action=logout');
+            exit;
+        }
+    }
 }

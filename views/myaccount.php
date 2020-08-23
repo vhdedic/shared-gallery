@@ -16,7 +16,11 @@
                 <input type="password" class="form-control" name="confirm_new_password" required>
             </div>
             <br>
-            <button type="submit" class="btn btn-primary" name="submit_password" >Change Password</button>
+            <button type="submit" class="btn btn-dark" name="submit_password">Change Password</button>
         </form>
     </div>
 </div>
+<h4 class="my-4">Remove Account</h4>
+<form method="post">
+    <button type="submit" name="remove_account" class="btn btn-lg btn-danger" formaction="<?php echo Config::getParams('url'); ?>index.php?page=myaccount&action=remove">Remove Account</button>
+</form>

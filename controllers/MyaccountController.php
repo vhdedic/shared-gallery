@@ -16,4 +16,9 @@ class MyaccountController
             exit();
         }
     }
+
+    function remove()
+    {
+        User::removeAccount();
+    }
 }
