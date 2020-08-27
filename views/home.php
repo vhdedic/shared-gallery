@@ -2,5 +2,7 @@
 <hr class="my-4">
 <div class="text-center">
     <a href="#" class="btn btn-lg btn-dark">Images</a>
+<?php if (!isset($_SESSION["username"])){ ?>
     <a href="<?php echo Config::getParams('url'); ?>?page=login&action=index" class="btn btn-lg btn-dark">Login</a>
+<?php    } ?>
 </div>

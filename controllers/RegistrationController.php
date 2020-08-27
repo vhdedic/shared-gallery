@@ -14,7 +14,9 @@ class RegistrationController
         } else {
             User::registerUser();
             $view = new View;
-            $view->render('layout', 'registration', $args = []);
+            $view->render('layout', 'registration', $args = [
+                'notifications' => Validation::notifications(),
+            ]);
         }
     }
 }

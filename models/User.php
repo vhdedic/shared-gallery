@@ -7,20 +7,49 @@ class User
     public static function registerUser()
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $sth = Database::getInstance()->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
 
-            $hashedpassword = password_hash($_POST['password'], PASSWORD_ARGON2I);
+            $validation = new Validation;
+            $validation->validate(array(
+                'username' => array(
+                    'required' => true,
+                    'size_min' => 8,
+                    'size_max' => 20,
+                    'unique' => 'users'
+                ),
+                'email' => array(
+                    'required' => true,
+                    'size_max' => 40,
+                    'email' => 'email',
+                    'unique' => 'users'
+                ),
+                'password' => array(
+                    'required' => true,
+                    'size_min' => 8,
+                    'confirm' => 'confirm_password'
+                ),
+                'confirm_password' => array(
+                    'required' => true,
+                    'confirm' => 'password'
+                )
+            ));
 
-            // Bind parameters to statement
-            $sth->bindParam(':username', $_POST['username']);
-            $sth->bindParam(':email', $_POST['email']);
-            $sth->bindParam(':password', $hashedpassword);
+            if($validation->validate() == true){
 
-            // Execute the prepared statement
-            $sth->execute();
+                $sth = Database::getInstance()->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
 
-            header('Location: '.Config::getParams('url').'index.php?page=login&action=index');
-            exit();
+                $hashedpassword = password_hash($_POST['password'], PASSWORD_ARGON2I);
+
+                // Bind parameters to statement
+                $sth->bindParam(':username', $_POST['username']);
+                $sth->bindParam(':email', $_POST['email']);
+                $sth->bindParam(':password', $hashedpassword);
+
+                // Execute the prepared statement
+                $sth->execute();
+
+                header('Location: '.Config::getParams('url').'index.php?page=login&action=index');
+                exit();
+            }
         }
     }
 
