@@ -14,7 +14,9 @@ class LoginController
 
             User::loginUser();
             $view = new View;
-            $view->render('layout', 'login', $args = []);
+            $view->render('layout', 'login', $args = [
+                'notifications' => Validation::notifications(),
+            ]);
         }
     }
 

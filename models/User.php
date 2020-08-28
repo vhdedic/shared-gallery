@@ -56,24 +56,38 @@ class User
     public static function loginUser()
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $sth = Database::getInstance()->prepare("SELECT id, username, password FROM users WHERE username = :username");
 
-            $sth->bindValue(':username', $_POST['username']);
+            $validation = new Validation;
+            $validation->validate(array(
+                'username' => array(
+                    'required' => true
+                ),
+                'password' => array(
+                    'required' => true
+                )
+            ));
 
-            $sth->execute();
+            if($validation->validate() == true){
 
-            $userdata = $sth->fetch();
+                $sth = Database::getInstance()->prepare("SELECT id, username, password FROM users WHERE username = :username");
 
-            if(!empty($_POST["remember_me"])){
-                setcookie ("remember_username",$_POST["username"],time()+ 1296000);
-            }
+                $sth->bindValue(':username', $_POST['username']);
 
-            if (password_verify($_POST['password'], $userdata['password'])){
+                $sth->execute();
 
-                $_SESSION['username'] = $userdata['username'];
+                $userdata = $sth->fetch();
 
-                header('Location: '.Config::getParams('url').'index.php?page=management&action=index');
-                exit();
+                if(!empty($_POST["remember_me"])){
+                    setcookie ("remember_username",$_POST["username"],time()+ 1296000);
+                }
+
+                if (password_verify($_POST['password'], $userdata['password'])){
+
+                    $_SESSION['username'] = $userdata['username'];
+
+                    header('Location: '.Config::getParams('url').'index.php?page=management&action=index');
+                    exit();
+                }
             }
         }
     }
