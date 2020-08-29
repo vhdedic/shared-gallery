@@ -96,25 +96,47 @@ class User
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-            $username = $_SESSION['username'];
+            $validation = new Validation;
+            $validation->validate(array(
+                'old_password' => array(
+                    'required' => true
+                ),
+                'new_password' => array(
+                    'required' => true,
+                    'size_min' => 8,
+                    'confirm' => 'confirm_new_password'
+                ),
+                'confirm_new_password' => array(
+                    'required' => true,
+                    'confirm' => 'new_password'
+                ),
+            ));
 
-            $sth_old = Database::getInstance()->query("SELECT password FROM users WHERE username = '$username'");
-            $sth_old->execute();
+            if($validation->validate() == true){
 
-            $old_password = $sth_old->fetchColumn();
+                $username = $_SESSION['username'];
 
-            $sth_new = Database::getInstance()->prepare("UPDATE users SET password = :new_password WHERE username = '$username'");
+                $stmt_old = Database::getInstance()->query("SELECT password FROM users WHERE username = '$username'");
+                $stmt_old->execute();
 
-            if (password_verify($_POST['old_password'], $old_password)) {
+                $old_password = $stmt_old->fetchColumn();
 
-                $hashednewpassword = password_hash($_POST['new_password'], PASSWORD_ARGON2I);
+                $stmt_new = Database::getInstance()->prepare("UPDATE users SET password = :new_password WHERE username = '$username'");
 
-                $sth_new->bindParam(':new_password', $hashednewpassword);
+                if (password_verify($_POST['old_password'], $old_password)) {
 
-                $sth_new->execute();
+                    $hashednewpassword = password_hash($_POST['new_password'], PASSWORD_ARGON2I);
 
-                header('Location: '.Config::getParams('url').'index.php?page=login&action=logout');
-                exit;
+                    $stmt_new->bindParam(':new_password', $hashednewpassword);
+
+                    $stmt_new->execute();
+
+                    header('Location: '.Config::getParams('url').'index.php?page=login&action=logout');
+                    exit;
+
+                } else {
+                    array_push(Validation::$errors, 'Old password is wrong');
+                }
             }
         }
     }
@@ -128,6 +150,7 @@ class User
             $sth = Database::getInstance()->prepare("SELECT image FROM images WHERE user_id = (SELECT id FROM users WHERE username = '$username')");
 
             $sth->execute();
+
             $images = $sth->fetchAll();
 
             foreach ($images as $image) {
