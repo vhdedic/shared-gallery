@@ -1,3 +1,12 @@
+<?php
+if (isset($notifications)){
+    echo '<br>';
+    foreach($notifications as $notification){ ?>
+        <div class="alert alert-danger" role="alert">
+            <?php echo $notification; ?>
+        </div><?php
+    }
+} ?>
 <h1 class="my-4">Management</h1>
 <form method="POST" enctype="multipart/form-data" class="md-form">
 	<input type="file" name="images">

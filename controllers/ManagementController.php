@@ -11,6 +11,7 @@ class ManagementController
             $view = new View;
             $view->render('layout', 'management', $args = [
                 'images' => Image::getImages(),
+                'notifications' => Validation::notifications(),
             ]);
 
         } else {

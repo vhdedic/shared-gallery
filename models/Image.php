@@ -25,6 +25,9 @@ class Image
                 $sth = Database::getInstance()->prepare("INSERT INTO images (user_id, image) VALUES ((SELECT id FROM users WHERE username = '$username'), '$new_filename')");
 
                 $sth->execute();
+
+            } else {
+                array_push(Validation::$errors, 'Image type is wrong');
             }
         }
     }
