@@ -20,7 +20,15 @@ class FrontController
 
         // get controller class
         $controller = ucfirst($file).'Controller';
-        $controller = new $controller();
-        $controller->$action();
+
+        if (file_exists(CONTROLLERS.$controller.'.php') && method_exists($controller, $action)) {
+            $controller = new $controller();
+            $controller->$action();
+
+        } else {
+            header("HTTP/1.0 404 Not Found");
+        }
+
+
     }
 }
