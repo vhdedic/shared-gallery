@@ -1,14 +1,24 @@
 <?php
+
 /**
- *
+ * User model
  */
 class User
 {
+    /**
+     * Register user
+     *
+     * @return object|false If validation passed or not
+     */
     public static function registerUser()
     {
+        // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+            // Call Validation model
             $validation = new Validation;
+
+            // Validate register form
             $validation->validate(array(
                 'username' => array(
                     'required' => true,
@@ -33,31 +43,41 @@ class User
                 )
             ));
 
+            // Execute query if validation pass
             if($validation->validate() == true){
 
                 $sth = Database::getInstance()->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
 
+                // Hashing password before store to database
                 $hashedpassword = password_hash($_POST['password'], PASSWORD_ARGON2I);
 
-                // Bind parameters to statement
                 $sth->bindParam(':username', $_POST['username']);
                 $sth->bindParam(':email', $_POST['email']);
                 $sth->bindParam(':password', $hashedpassword);
 
-                // Execute the prepared statement
                 $sth->execute();
 
+                // Redirect to login page after registration
                 header('Location: '.Config::getParams('url').'index.php?page=login&action=index');
                 exit();
             }
         }
     }
 
+    /**
+     * User login
+     *
+     * @return string|false If validation passed or not
+     */
     public static function loginUser()
     {
+        // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+            // Call Validation model
             $validation = new Validation;
+
+            // Validate login form
             $validation->validate(array(
                 'username' => array(
                     'required' => true
@@ -67,6 +87,7 @@ class User
                 )
             ));
 
+            // Execute query if validation pass
             if($validation->validate() == true){
 
                 $sth = Database::getInstance()->prepare("SELECT id, username, password FROM users WHERE username = :username");
@@ -77,14 +98,18 @@ class User
 
                 $userdata = $sth->fetch();
 
+                // Store "remember_username" cookie if $_POST["remember_me"] is checked
                 if(!empty($_POST["remember_me"])){
                     setcookie ("remember_username",$_POST["username"],time()+ 1296000);
                 }
 
+                // Password verify
                 if (password_verify($_POST['password'], $userdata['password'])){
 
+                    // Get username
                     $_SESSION['username'] = $userdata['username'];
 
+                    // Redirect to management page after login
                     header('Location: '.Config::getParams('url').'index.php?page=management&action=index');
                     exit();
                 }
@@ -92,11 +117,20 @@ class User
         }
     }
 
+    /**
+     * Change user password
+     *
+     * @return string|string If validation passed or not
+     */
     public static function changePassword()
     {
+        // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+            // Call Validation model
             $validation = new Validation;
+
+            // Validate change password form
             $validation->validate(array(
                 'old_password' => array(
                     'required' => true
@@ -112,25 +146,32 @@ class User
                 ),
             ));
 
+            // Execute queries if validation pass
             if($validation->validate() == true){
 
+                // Get username
                 $username = $_SESSION['username'];
 
+                // Get old password from database
                 $stmt_old = Database::getInstance()->query("SELECT password FROM users WHERE username = '$username'");
                 $stmt_old->execute();
 
                 $old_password = $stmt_old->fetchColumn();
 
+                // Change password
                 $stmt_new = Database::getInstance()->prepare("UPDATE users SET password = :new_password WHERE username = '$username'");
 
+                // Old password verify
                 if (password_verify($_POST['old_password'], $old_password)) {
 
+                    // Hashing new password before store to database
                     $hashednewpassword = password_hash($_POST['new_password'], PASSWORD_ARGON2I);
 
                     $stmt_new->bindParam(':new_password', $hashednewpassword);
 
                     $stmt_new->execute();
 
+                    // Logout user after change password
                     header('Location: '.Config::getParams('url').'index.php?page=login&action=logout');
                     exit;
 
@@ -141,25 +182,36 @@ class User
         }
     }
 
+    /**
+     * Remove user account and user images from database and upload map
+     *
+     * @return string login view
+     */
     public static function removeAccount()
     {
+        // Check if isset $_POST['remove_account'])
         if(isset($_POST['remove_account'])){
 
+            // Get username
             $username = $_SESSION['username'];
 
+            // Remove user images from database
             $sth = Database::getInstance()->prepare("SELECT image FROM images WHERE user_id = (SELECT id FROM users WHERE username = '$username')");
 
             $sth->execute();
 
             $images = $sth->fetchAll();
 
+            // Remove user images from upload map
             foreach ($images as $image) {
                 unlink(ROOT.'uploads/'.$image['image']);
             }
 
+            // Remove user account in database
             $sth_del = Database::getInstance()->prepare("DELETE FROM users WHERE username = '$username'");
             $sth_del->execute();
 
+            // Logout removed user account
             header('Location: '.Config::getParams('url').'index.php?page=login&action=logout');
             exit;
         }

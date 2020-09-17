@@ -1,26 +1,32 @@
 <?php
+
 /**
- *
+ * FrontController controller
  */
 class FrontController
 {
+    /**
+     *  Constructor for FrontController
+     */
     function __construct()
     {
-        // start session
+        // Start session
         session_start();
-        // get file and action
+
+        // Get controller prefix as $file and method as $action from query      string
         if($_SERVER['QUERY_STRING'] == ''){
             $file = 'home';
             $action = 'index';
-        }
-        else{
+
+        } else {
             $file = htmlspecialchars($_GET['page']);
             $action = htmlspecialchars($_GET['action']);
         }
 
-        // get controller class
+        // Get complete controller filename
         $controller = ucfirst($file).'Controller';
 
+        // If condition is true call controller->method() or if is false return error 404
         if (file_exists(CONTROLLERS.$controller.'.php') && method_exists($controller, $action)) {
             $controller = new $controller();
             $controller->$action();
@@ -28,7 +34,5 @@ class FrontController
         } else {
             header("HTTP/1.0 404 Not Found");
         }
-
-
     }
 }

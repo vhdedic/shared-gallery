@@ -1,18 +1,62 @@
 <?php
+
 /**
- *
+ * Database model
  */
 class Database
 {
+    /**
+     * Database connection instance
+     *
+     * @var object
+     */
     private static $instance = null;
+
+    /**
+     * Database connection
+     *
+     * @var object
+     */
     private $conn;
 
+    /**
+     * Constructor for Database model
+     */
     private function __construct()
     {
+        /**
+         * Database host name
+         *
+         * @var string
+         */
         $dbhost = Config::getParams('db_host');
+
+        /**
+         * Database name
+         *
+         * @var string
+         */
         $dbname = Config::getParams('db_name');
+
+        /**
+         * Character set
+         *
+         * @var string
+         */
         $dbchar = Config::getParams('db_charset');
+
+        /**
+         * Database username
+         *
+         * @var string
+         */
         $dbuser = Config::getParams('db_user');
+
+        /**
+         * Database password
+         *
+         * @var string
+         */
         $dbpass = Config::getParams('db_password');
 
         try {
@@ -23,13 +67,18 @@ class Database
         }
     }
 
+    /**
+     * Get instance of connection
+     *
+     * @return object 
+     */
     public static function getInstance()
     {
         if(!isset(self::$instance)){
             self::$instance = new Database();
         }
 
-        // get connection
+        // Get connection
         return self::$instance->conn;
     }
 }
