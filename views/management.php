@@ -9,9 +9,15 @@ if (isset($notifications)){
 } ?>
 <h1 class="my-4">Management</h1>
 <form method="POST" enctype="multipart/form-data" class="md-form">
-	<input type="file" name="images">
+    <label for="browse" class="btn btn-dark">
+        <input type="file" name="images" id="browse" class="d-none" onchange="document.getElementById('filename').innerHTML = this.files[0].name;">
+        Browse
+    </label>
+    <span id="filename">Only .png and .jpg images.</span>
 	<br><br>
-	<input type="submit" name="upload" value="Upload">
+    <input type="submit" name="upload" value="Upload" class="btn btn-dark">
+</form>
+<span class='label label-info' id="upload-file-info"></span>
 </form>
 <table class="table border-bottom my-5">
     <?php foreach ($images as $image) : ?>
@@ -36,3 +42,6 @@ if (isset($notifications)){
         </tr>
     <?php endforeach; ?>
 </table>
+<script>
+
+</script>

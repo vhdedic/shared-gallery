@@ -17,4 +17,14 @@ class HomeController
 
         $view->render('layout', 'home', $args = []);
     }
+
+    /**
+     * Number of images for Images button
+     *
+     * @return void  Call method
+     */
+    function images()
+    {
+        Image::countImages();
+    }
 }

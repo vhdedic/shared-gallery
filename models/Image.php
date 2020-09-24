@@ -81,4 +81,19 @@ class Image
             $sth->execute();
         }
     }
+
+    /**
+     * Count images in database. Display on home view after ajax request.
+     *
+     * @return string   Number of images
+     */
+    public static function countImages()
+    {
+        $sth = Database::getInstance()->query('SELECT COUNT(image) as count FROM images');
+
+        $count = $sth->fetchColumn();
+
+        echo $count;
+    }
+
 }

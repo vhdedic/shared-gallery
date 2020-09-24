@@ -1,8 +1,25 @@
-<h1 class="my-4 display-4 text-center"><?php echo Config::getParams('app_name'); ?></h1>
+<h1 class="my-5 text-center">Number images in <?php echo Config::getParams('app_name'); ?>: </h1>
+<h2 id="number" class="text-center">Click Images button</h2>
 <hr class="my-4">
 <div class="text-center">
-    <a href="#" class="btn btn-lg btn-dark">Images</a>
-<?php if (!isset($_SESSION["username"])){ ?>
-    <a href="<?php echo Config::getParams('url'); ?>?page=login&action=index" class="btn btn-lg btn-dark">Login</a>
-<?php    } ?>
+    <button type="button" onclick="buttonImages();" class="btn btn-lg btn-dark">Images</button>
+    <?php if (!isset($_SESSION["username"])){ ?>
+        <a href="<?php echo Config::getParams('url'); ?>?page=login&action=index" class="btn btn-lg btn-dark">Login</a>
+    <?php    } ?>
+
+<script>
+
+    function buttonImages() {
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("number").innerHTML = this.responseText;
+            }
+        };
+        httpRequest.open("POST", "<?php echo Config::getParams('url'); ?>?page=home&action=images", true);
+        httpRequest.send();
+    }
+
+</script>
+
 </div>
