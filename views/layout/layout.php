@@ -32,7 +32,13 @@
                 </div>
             </li>
         </ul>
-<?php    } ?>
+<?php    } else { ?>
+    <ul class="nav navbar-nav ml-auto">
+        <li><a class="nav-link text-light text-right" href="<?php echo Config::getParams('url'); ?>?page=login&action=index">Login</a></li>
+    </ul>
+
+
+<?php } ?>
 </nav>
 
 <div class="container">

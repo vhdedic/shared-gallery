@@ -3,9 +3,6 @@
 <hr class="my-4">
 <div class="text-center">
     <button type="button" onclick="buttonImages();" class="btn btn-lg btn-dark">Images</button>
-    <?php if (!isset($_SESSION["username"])){ ?>
-        <a href="<?php echo Config::getParams('url'); ?>?page=login&action=index" class="btn btn-lg btn-dark">Login</a>
-    <?php    } ?>
 
 <script>
 
