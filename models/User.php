@@ -8,7 +8,7 @@ class User
     /**
      * Register user
      *
-     * @return object|false If validation passed or not
+     * @return string|false If validation passed or not
      */
     public static function registerUser()
     {
@@ -67,7 +67,7 @@ class User
     /**
      * User login
      *
-     * @return string|false If validation passed or not
+     * @return string|string If validation passed or not
      */
     public static function loginUser()
     {
@@ -103,8 +103,11 @@ class User
                     setcookie ("remember_username",$_POST["username"],time()+ 1296000);
                 }
 
-                // Password verify
-                if (password_verify($_POST['password'], $userdata['password'])){
+                // Check username and password
+                if(empty($userdata)){
+                    array_push(Validation::$errors, 'Access denied');
+
+                } elseif (password_verify($_POST['password'], $userdata['password'])){
 
                     // Get username
                     $_SESSION['username'] = $userdata['username'];
@@ -112,6 +115,9 @@ class User
                     // Redirect to management page after login
                     header('Location: '.Config::getParams('url').'index.php?page=management&action=index');
                     exit();
+
+                } else {
+                    array_push(Validation::$errors, 'Access denied');
                 }
             }
         }
