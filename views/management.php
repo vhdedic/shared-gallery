@@ -8,15 +8,20 @@ if (isset($notifications)){
     }
 } ?>
 <h1 class="my-4">Management</h1>
-<form method="POST" enctype="multipart/form-data" class="md-form">
-    <label for="browse" class="btn btn-dark">
-        <input type="file" name="images" id="browse" class="d-none" onchange="document.getElementById('filename').innerHTML = this.files[0].name;">
-        Browse
-    </label>
-    <span id="filename">Only .png and .jpg images.</span>
-	<br><br>
-    <input type="submit" name="upload" value="Upload" class="btn btn-dark">
-</form>
+<h4 class="mb-4">Upload Image</h4>
+<div class="card bg-light">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data" class="md-form">
+            <label for="browse" class="btn btn-dark">
+                <input type="file" name="images" id="browse" class="d-none" onchange="document.getElementById('filename').innerHTML = this.files[0].name;">
+                Browse
+            </label>
+            <span id="filename" class="ml-2">Only .png and .jpg images.</span>
+        	<br><br>
+            <input type="submit" name="upload" value="Upload" class="btn btn-dark">
+        </form>
+    </div>
+</div>
 <span class='label label-info' id="upload-file-info"></span>
 </form>
 <table class="table border-bottom my-5">

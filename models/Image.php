@@ -26,8 +26,11 @@ class Image
             // Get username
             $username = $_SESSION['username'];
 
-            // Validate image format
-            if ($type == 'image/jpeg' || $type == 'image/png') {
+            if (empty($filename)) {
+                array_push(Validation::$errors, 'Choose image before press Upload button');
+
+            } elseif ($type == 'image/jpeg' || $type == 'image/png') {
+
                 $path = pathinfo($filename);
                 $extension = $path['extension'];
                 $new_filename = date('U_').rand(100000, 999999).'.'.$extension;
