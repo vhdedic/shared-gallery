@@ -13,7 +13,7 @@ class User
     public static function registerUser()
     {
         // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Call Validation model
             $validation = new Validation;
@@ -44,7 +44,7 @@ class User
             ));
 
             // Execute query if validation pass
-            if($validation->validate() == true){
+            if ($validation->validate() == true) {
 
                 $sth = Database::getInstance()->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
 
@@ -72,7 +72,7 @@ class User
     public static function loginUser()
     {
         // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Call Validation model
             $validation = new Validation;
@@ -88,7 +88,7 @@ class User
             ));
 
             // Execute query if validation pass
-            if($validation->validate() == true){
+            if ($validation->validate() == true) {
 
                 $sth = Database::getInstance()->prepare("SELECT id, username, password FROM users WHERE username = :username");
 
@@ -131,7 +131,7 @@ class User
     public static function changePassword()
     {
         // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Call Validation model
             $validation = new Validation;
@@ -153,19 +153,19 @@ class User
             ));
 
             // Execute queries if validation pass
-            if($validation->validate() == true){
+            if ($validation->validate() == true) {
 
                 // Get username
                 $username = $_SESSION['username'];
 
                 // Get old password from database
-                $stmt_old = Database::getInstance()->query("SELECT password FROM users WHERE username = '$username'");
-                $stmt_old->execute();
+                $sth_old = Database::getInstance()->query("SELECT password FROM users WHERE username = '$username'");
+                $sth_old->execute();
 
-                $old_password = $stmt_old->fetchColumn();
+                $old_password = $sth_old->fetchColumn();
 
                 // Change password
-                $stmt_new = Database::getInstance()->prepare("UPDATE users SET password = :new_password WHERE username = '$username'");
+                $sth_new = Database::getInstance()->prepare("UPDATE users SET password = :new_password WHERE username = '$username'");
 
                 // Old password verify
                 if (password_verify($_POST['old_password'], $old_password)) {
@@ -173,9 +173,9 @@ class User
                     // Hashing new password before store to database
                     $hashednewpassword = password_hash($_POST['new_password'], PASSWORD_ARGON2I);
 
-                    $stmt_new->bindParam(':new_password', $hashednewpassword);
+                    $sth_new->bindParam(':new_password', $hashednewpassword);
 
-                    $stmt_new->execute();
+                    $sth_new->execute();
 
                     // Logout user after change password
                     header('Location: '.Config::getParams('url').'index.php?page=login&action=logout');
@@ -215,6 +215,7 @@ class User
 
             // Remove user account in database
             $sth_del = Database::getInstance()->prepare("DELETE FROM users WHERE username = '$username'");
+
             $sth_del->execute();
 
             // Logout removed user account

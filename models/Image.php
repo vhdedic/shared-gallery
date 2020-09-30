@@ -13,7 +13,7 @@ class Image
     public static function uploadImage()
     {
         // Check if isset ($_POST['upload'])
-        if(isset($_POST['upload'])){
+        if (isset($_POST['upload'])) {
 
             // Upload folder
             $upload = ROOT.'uploads/';
@@ -61,7 +61,6 @@ class Image
         $images = $sth->fetchAll();
 
         return $images;
-
     }
 
     /**
@@ -72,7 +71,7 @@ class Image
     public static function imageRemove()
     {
         // Check if isset ($_POST['remove'])
-        if(isset($_POST['remove'])){
+        if (isset($_POST['remove'])) {
 
             $image_id = $_POST['id'];
             $image_name = $_POST['image'];

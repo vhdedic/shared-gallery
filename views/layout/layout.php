@@ -13,32 +13,35 @@
 </head>
 <body>
 
-<!-- navbar -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
     <!-- Brand/logo -->
     <a class="navbar-brand text-light" href="<?php echo Config::getParams('url'); ?>"><?php echo Config::getParams('app_name'); ?></a>
 
     <!-- Links -->
-    <?php if (isset($_SESSION["username"])){ ?>
+    <?php if (isset($_SESSION["username"])): ?>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown">
+
                 <a class="nav-link text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['username']; ?></a>
+
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="<?php echo Config::getParams('url'); ?>index.php?page=management&action=index">Management</a>
                     <a class="dropdown-item" href="<?php echo Config::getParams('url'); ?>index.php?page=myaccount&action=index">My Account</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?php echo Config::getParams('url'); ?>index.php?page=login&action=logout">Logout</a>
                 </div>
+
             </li>
         </ul>
-<?php    } else { ?>
-    <ul class="nav navbar-nav ml-auto">
-        <li><a class="nav-link text-light text-right" href="<?php echo Config::getParams('url'); ?>?page=login&action=index">Login</a></li>
-    </ul>
 
+    <?php else: ?>
+        <ul class="nav navbar-nav ml-auto">
+            <li><a class="nav-link text-light text-right" href="<?php echo Config::getParams('url'); ?>?page=login&action=index">Login</a></li>
+        </ul>
+    <?php endif; ?>
 
-<?php } ?>
 </nav>
 
 <div class="container">

@@ -70,8 +70,8 @@ class Database
 
             $dbconn->exec($sql);
 
-        } catch(PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
         }
 
         // Connect to database
@@ -90,7 +90,7 @@ class Database
      */
     public static function getInstance()
     {
-        if(!isset(self::$instance)){
+        if (!isset(self::$instance)) {
             self::$instance = new Database();
         }
 

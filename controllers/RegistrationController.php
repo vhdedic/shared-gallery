@@ -14,8 +14,7 @@ class RegistrationController
     function index()
     {
         // Check if user logged
-        if (isset($_SESSION['username']))
-        {
+        if (isset($_SESSION['username'])) {
             header('Location: '.Config::getParams('url').'index.php?page=home&action=index');
             exit();
 
@@ -28,7 +27,6 @@ class RegistrationController
             $view = new View;
 
             $view->render('layout', 'registration', $args = [
-                // Get $notifications
                 'notifications' => Validation::notifications(),
             ]);
         }

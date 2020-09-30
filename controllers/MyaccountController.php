@@ -14,7 +14,7 @@ class MyaccountController
     function index()
     {
         // Check if user logged
-        if (isset($_SESSION['username'])){
+        if (isset($_SESSION['username'])) {
 
             // Call changePassword() for change user password
             User::changePassword();
@@ -23,7 +23,6 @@ class MyaccountController
             $view = new View;
 
             $view->render('layout', 'myaccount', $args = [
-                // Get $notifications
                 'notifications' => Validation::notifications(),
             ]);
 

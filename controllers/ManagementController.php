@@ -14,7 +14,7 @@ class ManagementController
     function index()
     {
         // Check if user logged
-        if (isset($_SESSION['username'])){
+        if (isset($_SESSION['username'])) {
 
             // Call uploadImage() for image upload
             Image::uploadImage();
@@ -23,9 +23,7 @@ class ManagementController
             $view = new View;
 
             $view->render('layout', 'management', $args = [
-                // Get $images
                 'images' => Image::getImages(),
-                // Get $notifications
                 'notifications' => Validation::notifications(),
             ]);
 
