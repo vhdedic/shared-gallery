@@ -59,21 +59,6 @@ class Database
          */
         $dbpass = Config::getParams('db_password');
 
-        // Create database if not exist
-        try {
-            $dbconn = new PDO("mysql:host=$dbhost;charset=$dbchar", $dbuser, $dbpass);
-
-            $sql =
-                "CREATE DATABASE IF NOT EXISTS ".$dbname." CHARACTER SET utf8 COLLATE utf8_general_ci;
-                USE ".$dbname.";"
-                .file_get_contents(ROOT.'config/database.sql');
-
-            $dbconn->exec($sql);
-
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-
         // Connect to database
         try {
             $this->conn = new PDO("mysql:host=$dbhost;dbname=$dbname;charset=$dbchar", $dbuser, $dbpass);
