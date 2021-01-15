@@ -1,7 +1,7 @@
 <?php
 
 // define base path
-define('ROOT', __DIR__ . '/');
+define('ROOT', dirname(dirname(__FILE__)).'/');
 define('MODELS', ROOT.'models/');
 define('VIEWS', ROOT.'views/');
 define('CONTROLLERS', ROOT.'controllers/');
