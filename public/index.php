@@ -2,9 +2,9 @@
 
 // define base path
 define('ROOT', dirname(dirname(__FILE__)).'/');
-define('MODELS', ROOT.'models/');
-define('VIEWS', ROOT.'views/');
-define('CONTROLLERS', ROOT.'controllers/');
+define('MODELS', ROOT.'app/model/');
+define('VIEWS', ROOT.'app/view/');
+define('CONTROLLERS', ROOT.'app/controller/');
 
 // enable error_reporting
 error_reporting(E_ALL);
