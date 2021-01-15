@@ -5,6 +5,7 @@ define('ROOT', dirname(dirname(__FILE__)).'/');
 define('MODELS', ROOT.'app/model/');
 define('VIEWS', ROOT.'app/view/');
 define('CONTROLLERS', ROOT.'app/controller/');
+define('CORE', ROOT.'app/core/');
 
 // enable error_reporting
 error_reporting(E_ALL);
@@ -15,6 +16,7 @@ ini_set('display_startup_errors', TRUE);
 set_include_path(implode(PATH_SEPARATOR, array(
     MODELS,
     CONTROLLERS,
+    CORE,
 )));
 
 // register autoloader
