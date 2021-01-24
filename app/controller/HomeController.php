@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Controller;
+
+use App\Core\Test;
+
 /**
  * HomeController controller
  */
@@ -12,10 +16,17 @@ class HomeController
      */
     function index()
     {
+        /*
         // Call View model
+
         $view = new View;
 
         $view->render('layout', 'home', $args = []);
+        */
+        
+        $test = new Test;
+        $test->checkInclude();
+
     }
 
     /**

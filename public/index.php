@@ -7,5 +7,5 @@ define('ROOT', dirname(dirname(__FILE__)).'/');
 
 require_once ROOT.'vendor/autoload.php';
 
-$test = new App\Core\Test;
-$test->checkInclude();
+$application = new App\Core\Application;
+$application->run();
