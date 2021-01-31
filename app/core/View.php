@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Core;
+
 /**
  * View model
  */
@@ -19,13 +21,13 @@ class View
         extract($args);
 
         // Include view
-        include VIEWS.$name.'.php';
+        include ROOT.'app/view/'.$name.'.phtml';
 
         // Get buffer content
         $content = ob_get_contents();
         ob_get_clean();
 
-        include VIEWS.'layout/'.$layout.'.php';
+        include ROOT.'app/view/'.$layout.'.phtml';
 
         return $this;
     }

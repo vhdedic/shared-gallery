@@ -1,4 +1,4 @@
-<h1 class="my-5 text-center">Number images in <?php echo Config::getParams('app_name'); ?>: </h1>
+<h1 class="my-5 text-center">Number images in Shared Gallery: </h1>
 
 <h2 id="number" class="text-center">Click Images button</h2>
 
@@ -8,7 +8,7 @@
     <button type="button" onclick="buttonImages();" class="btn btn-lg btn-dark">Images</button>
 
     <script>
-
+VIEWS.
         function buttonImages() {
             var httpRequest = new XMLHttpRequest();
             httpRequest.onreadystatechange = function() {
@@ -16,7 +16,7 @@
                     document.getElementById("number").innerHTML = this.responseText;
                 }
             };
-            httpRequest.open("POST", "<?php echo Config::getParams('url'); ?>?page=home&action=images", true);
+            httpRequest.open("POST", "", true);
             httpRequest.send();
         }
 

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Core\Test;
+use App\Core\View;
 
 /**
  * HomeController controller
@@ -16,16 +16,15 @@ class HomeController
      */
     function index()
     {
-        /*
-        // Call View model
+
 
         $view = new View;
 
         $view->render('layout', 'home', $args = []);
-        */
-        
-        $test = new Test;
-        $test->checkInclude();
+
+
+        //$test = new Test;
+        //$test->checkInclude();
 
     }
 
