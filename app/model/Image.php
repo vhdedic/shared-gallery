@@ -37,7 +37,7 @@ class Image
 
                 move_uploaded_file($tmp_name, $upload.$new_filename);
 
-                $sth = Database::getInstance()->prepare("INSERT INTO images (user_id, image) VALUES ((SELECT id FROM users WHERE username = '$username'), '$new_filename')");
+                $sth = Database::getInstance()->prepare("INSERT INTO image (user_id, image) VALUES ((SELECT id FROM user WHERE username = '$username'), '$new_filename')");
 
                 $sth->execute();
 
@@ -54,7 +54,7 @@ class Image
      */
     public static function getImages()
     {
-        $sth = Database::getInstance()->prepare("SELECT images.id, images.image, users.username, users.email FROM images INNER JOIN users ON users.id = images.user_id");
+        $sth = Database::getInstance()->prepare("SELECT image.id, image.filename, user.username, user.email FROM image INNER JOIN user ON user.id = image.user_id");
 
         $sth->execute();
 
@@ -76,7 +76,7 @@ class Image
             $image_id = $_POST['id'];
             $image_name = $_POST['image'];
 
-            $sth = Database::getInstance()->prepare("DELETE FROM images WHERE id=$image_id");
+            $sth = Database::getInstance()->prepare("DELETE FROM image WHERE id=$image_id");
 
             unlink(ROOT.'uploads/'.$image_name);
 
@@ -91,7 +91,7 @@ class Image
      */
     public static function countImages()
     {
-        $sth = Database::getInstance()->query('SELECT COUNT(image) as count FROM images');
+        $sth = Database::getInstance()->query('SELECT COUNT(image) as count FROM image');
 
         $count = $sth->fetchColumn();
 

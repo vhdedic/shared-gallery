@@ -24,13 +24,13 @@ class User
                     'required' => true,
                     'size_min' => 8,
                     'size_max' => 20,
-                    'unique' => 'users'
+                    'unique' => 'user'
                 ),
                 'email' => array(
                     'required' => true,
                     'size_max' => 40,
                     'email' => 'email',
-                    'unique' => 'users'
+                    'unique' => 'user'
                 ),
                 'password' => array(
                     'required' => true,
@@ -46,7 +46,7 @@ class User
             // Execute query if validation pass
             if ($validation->validate() == true) {
 
-                $sth = Database::getInstance()->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+                $sth = Database::getInstance()->prepare("INSERT INTO user (username, email, password) VALUES (:username, :email, :password)");
 
                 // Hashing password before store to database
                 $hashedpassword = password_hash($_POST['password'], PASSWORD_ARGON2I);
@@ -90,7 +90,7 @@ class User
             // Execute query if validation pass
             if ($validation->validate() == true) {
 
-                $sth = Database::getInstance()->prepare("SELECT id, username, password FROM users WHERE username = :username");
+                $sth = Database::getInstance()->prepare("SELECT id, username, password FROM user WHERE username = :username");
 
                 $sth->bindValue(':username', $_POST['username']);
 
@@ -159,13 +159,13 @@ class User
                 $username = $_SESSION['username'];
 
                 // Get old password from database
-                $sth_old = Database::getInstance()->query("SELECT password FROM users WHERE username = '$username'");
+                $sth_old = Database::getInstance()->query("SELECT password FROM user WHERE username = '$username'");
                 $sth_old->execute();
 
                 $old_password = $sth_old->fetchColumn();
 
                 // Change password
-                $sth_new = Database::getInstance()->prepare("UPDATE users SET password = :new_password WHERE username = '$username'");
+                $sth_new = Database::getInstance()->prepare("UPDATE user SET password = :new_password WHERE username = '$username'");
 
                 // Old password verify
                 if (password_verify($_POST['old_password'], $old_password)) {
@@ -202,7 +202,7 @@ class User
             $username = $_SESSION['username'];
 
             // Remove user images from database
-            $sth = Database::getInstance()->prepare("SELECT image FROM images WHERE user_id = (SELECT id FROM users WHERE username = '$username')");
+            $sth = Database::getInstance()->prepare("SELECT image FROM images WHERE user_id = (SELECT id FROM user WHERE username = '$username')");
 
             $sth->execute();
 
@@ -214,7 +214,7 @@ class User
             }
 
             // Remove user account in database
-            $sth_del = Database::getInstance()->prepare("DELETE FROM users WHERE username = '$username'");
+            $sth_del = Database::getInstance()->prepare("DELETE FROM user WHERE username = '$username'");
 
             $sth_del->execute();
 
