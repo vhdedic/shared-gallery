@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Model;
+
+use App\Core\Validation;
+use App\Core\Database;
+
 /**
  * User model
  */
@@ -58,7 +63,7 @@ class User
                 $sth->execute();
 
                 // Redirect to login page after registration
-                header('Location: '.Config::getParams('url').'index.php?page=login&action=index');
+                header('Location: /login/index/');
                 exit();
             }
         }
@@ -113,7 +118,7 @@ class User
                     $_SESSION['username'] = $userdata['username'];
 
                     // Redirect to management page after login
-                    header('Location: '.Config::getParams('url').'index.php?page=management&action=index');
+                    header('Location: /management/index/');
                     exit();
 
                 } else {
@@ -178,7 +183,7 @@ class User
                     $sth_new->execute();
 
                     // Logout user after change password
-                    header('Location: '.Config::getParams('url').'index.php?page=login&action=logout');
+                    header('Location: /login/logout/');
                     exit;
 
                 } else {
@@ -219,7 +224,7 @@ class User
             $sth_del->execute();
 
             // Logout removed user account
-            header('Location: '.Config::getParams('url').'index.php?page=login&action=logout');
+            header('Location: /login/logout/');
             exit;
         }
     }

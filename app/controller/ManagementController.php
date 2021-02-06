@@ -1,5 +1,11 @@
 <?php
 
+namespace App\Controller;
+
+use App\Core\View;
+use App\Model\Image;
+use App\Core\Validation;
+
 /**
  * ManagementController controller
  */
@@ -28,7 +34,7 @@ class ManagementController
             ]);
 
         } else {
-            header('Location: '.Config::getParams('url').'index.php?page=login&action=index');
+            header('Location: /login/index/');
             exit();
         }
     }
@@ -43,7 +49,7 @@ class ManagementController
         // Call imageRemove() for remove image in database and upload map
         Image::imageRemove();
 
-        header('Location: '.Config::getParams('url').'index.php?page=management&action=index');
+        header('Location: /management/index/');
         exit();
     }
 }

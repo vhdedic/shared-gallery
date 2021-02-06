@@ -29,7 +29,7 @@
     <?php foreach ($images as $image): ?>
         <tr>
             <td class="w-50">
-                <img class="mw-100" src="<?php echo Config::getParams('url').'uploads/'.$image['image']; ?>" alt="<?php echo $image['image']; ?>">
+                <img class="mw-100" src="<?php echo '/uploads/'.$image['filename']; ?>" alt="<?php echo $image['filename']; ?>">
             </td>
             <td class="w-50">
                 <div class="font-weight-bold">
@@ -39,8 +39,8 @@
                     <div class="my-4">
                         <form method="POST">
                             <input type="hidden" name="id" value="<?php echo $image['id'] ?>">
-                            <input type="hidden" name="image" value="<?php echo $image['image'] ?>">
-                            <button type="submit" name="remove" class="btn btn-danger" formaction="<?php echo Config::getParams('url'); ?>index.php?page=management&action=remove">Remove Image</button>
+                            <input type="hidden" name="image" value="<?php echo $image['filename'] ?>">
+                            <button type="submit" name="remove" class="btn btn-danger" formaction="/management/remove/">Remove Image</button>
                         </form>
                     </div>
                 <?php endif; ?>

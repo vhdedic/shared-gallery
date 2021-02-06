@@ -8,7 +8,7 @@
     <button type="button" onclick="buttonImages();" class="btn btn-lg btn-dark">Images</button>
 
     <script>
-VIEWS.
+
         function buttonImages() {
             var httpRequest = new XMLHttpRequest();
             httpRequest.onreadystatechange = function() {
@@ -16,7 +16,7 @@ VIEWS.
                     document.getElementById("number").innerHTML = this.responseText;
                 }
             };
-            httpRequest.open("POST", "", true);
+            httpRequest.open("POST", "/home/images/", true);
             httpRequest.send();
         }
 

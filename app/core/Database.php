@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Core;
+
+use App\Core\Config;
+use PDO;
+
 /**
  * Database model
  */

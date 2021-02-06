@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Controller;
+
+use App\Core\View;
+use App\Model\User;
+use App\Core\Validation;
 /**
  * LoginController controller
  */
@@ -15,7 +20,7 @@ class LoginController
     {
         // Check if user logged
         if (isset($_SESSION['username'])) {
-            header('Location: '.Config::getParams('url').'index.php?page=home&action=index');
+            header('Location: /home/index/');
             exit();
 
         } else {
@@ -41,7 +46,7 @@ class LoginController
     {
         unset($_SESSION['username']);
 
-        header('Location: '.Config::getParams('url').'index.php?page=login&action=index');
+        header('Location: /login/index/');
         exit();
     }
 }

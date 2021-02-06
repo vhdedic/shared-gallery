@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Core;
+
 /**
  * Get config parameters from config file
  */

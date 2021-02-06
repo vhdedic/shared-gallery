@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Model;
+
+use App\Core\Database;
+
 /**
  * Image model
  */
@@ -91,7 +95,7 @@ class Image
      */
     public static function countImages()
     {
-        $sth = Database::getInstance()->query('SELECT COUNT(image) as count FROM image');
+        $sth = Database::getInstance()->query('SELECT COUNT(filename) as count FROM image');
 
         $count = $sth->fetchColumn();
 

@@ -1,9 +1,15 @@
 <?php
 
+namespace App\Controller;
+
+use App\Core\View;
+use App\Model\User;
+use App\Core\Validation;
+
 /**
- * MyaccountController controller
+ * MyAccountController controller
  */
-class MyaccountController
+class MyAccountController
 {
     /**
      * Render myaccount view with View model if user logged
@@ -22,12 +28,12 @@ class MyaccountController
             // Call View model
             $view = new View;
 
-            $view->render('layout', 'myaccount', $args = [
+            $view->render('layout', 'myAccount', $args = [
                 'notifications' => Validation::notifications(),
             ]);
 
         } else {
-            header('Location: '.Config::getParams('url').'index.php?page=login&action=index');
+            header('Location: /login/index/');
             exit();
         }
     }

@@ -1,5 +1,11 @@
 <?php
 
+namespace App\Controller;
+
+use App\Model\User;
+use App\Core\View;
+use App\Core\Validation;
+
 /**
  * RegistrationController controller
  */
@@ -15,7 +21,7 @@ class RegistrationController
     {
         // Check if user logged
         if (isset($_SESSION['username'])) {
-            header('Location: '.Config::getParams('url').'index.php?page=home&action=index');
+            header('Location: /home/index/');
             exit();
 
         } else {
