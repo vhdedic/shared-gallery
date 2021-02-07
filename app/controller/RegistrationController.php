@@ -27,11 +27,11 @@ class RegistrationController
         } else {
 
             // Call registerUser() for user registration
-            User::registerUser();
+            $user = new User;
+            $user->registerUser();
 
             // Call View model
             $view = new View;
-
             $view->render('layout', 'registration', $args = [
                 'notifications' => Validation::notifications(),
             ]);

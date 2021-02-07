@@ -14,7 +14,7 @@ class Image
      *
      * @return object|string    If is image format valid or not
      */
-    public static function uploadImage()
+    public function uploadImage()
     {
         // Check if isset ($_POST['upload'])
         if (isset($_POST['upload'])) {
@@ -41,7 +41,7 @@ class Image
 
                 move_uploaded_file($tmp_name, $upload.$new_filename);
 
-                $sth = Database::getInstance()->prepare("INSERT INTO image (user_id, image) VALUES ((SELECT id FROM user WHERE username = '$username'), '$new_filename')");
+                $sth = Database::getInstance()->prepare("INSERT INTO image (user_id, filename) VALUES ((SELECT id FROM user WHERE username = '$username'), '$new_filename')");
 
                 $sth->execute();
 
@@ -56,7 +56,7 @@ class Image
      *
      * @return array $images
      */
-    public static function getImages()
+    public function getImages()
     {
         $sth = Database::getInstance()->prepare("SELECT image.id, image.filename, user.username, user.email FROM image INNER JOIN user ON user.id = image.user_id");
 
@@ -72,7 +72,7 @@ class Image
      *
      * @return void
      */
-    public static function imageRemove()
+    public function imageRemove()
     {
         // Check if isset ($_POST['remove'])
         if (isset($_POST['remove'])) {
@@ -93,7 +93,7 @@ class Image
      *
      * @return string   Number of images
      */
-    public static function countImages()
+    public function countImages()
     {
         $sth = Database::getInstance()->query('SELECT COUNT(filename) as count FROM image');
 

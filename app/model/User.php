@@ -15,7 +15,7 @@ class User
      *
      * @return string|false If validation passed or not
      */
-    public static function registerUser()
+    public function registerUser()
     {
         // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -74,7 +74,7 @@ class User
      *
      * @return string|string If validation passed or not
      */
-    public static function loginUser()
+    public function loginUser()
     {
         // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -133,7 +133,7 @@ class User
      *
      * @return string|string If validation passed or not
      */
-    public static function changePassword()
+    public function changePassword()
     {
         // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -198,7 +198,7 @@ class User
      *
      * @return string login view
      */
-    public static function removeAccount()
+    public function removeAccount()
     {
         // Check if isset $_POST['remove_account'])
         if(isset($_POST['remove_account'])){

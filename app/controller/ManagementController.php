@@ -23,13 +23,13 @@ class ManagementController
         if (isset($_SESSION['username'])) {
 
             // Call uploadImage() for image upload
-            Image::uploadImage();
+            $img = new Image;
+            $img->uploadImage();
 
             // Call View model
             $view = new View;
-
             $view->render('layout', 'management', $args = [
-                'images' => Image::getImages(),
+                'images' => $img->getImages(),
                 'notifications' => Validation::notifications(),
             ]);
 

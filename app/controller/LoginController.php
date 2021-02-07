@@ -26,7 +26,8 @@ class LoginController
         } else {
 
             // Call loginUser() for login user
-            User::loginUser();
+            $user = new User;
+            $user->loginUser();
 
             // Call View model
             $view = new View;

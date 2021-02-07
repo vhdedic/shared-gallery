@@ -17,16 +17,8 @@ class HomeController
      */
     function index()
     {
-
-
         $view = new View;
-
         $view->render('layout', 'home', $args = []);
-
-
-        //$test = new Test;
-        //$test->checkInclude();
-
     }
 
     /**
@@ -36,6 +28,7 @@ class HomeController
      */
     function images()
     {
-        Image::countImages();
+        $img = new Image;
+        $img->countImages();
     }
 }
