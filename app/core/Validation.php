@@ -27,6 +27,7 @@ class Validation
 
             $field = htmlentities($field, ENT_QUOTES, 'UTF-8');
             $value = trim($_POST[$field]);
+            $database = Database::getInstance();
 
             // Get one rule and rule value for field
             foreach ($rules as $rule => $rule_value) {
@@ -59,7 +60,7 @@ class Validation
                             }
                             break;
                         case 'unique':
-                            $sth = Database::getInstance()->query("SELECT COUNT($field) FROM $rule_value WHERE $field = '$value'");
+                            $sth = $database->query("SELECT COUNT($field) FROM $rule_value WHERE $field = '$value'");
                             $count = $sth->fetchColumn();
                             if ($count > 0) {
                                 array_push(Self::$errors, 'Field '.$field.' is not unique');
