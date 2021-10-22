@@ -6,33 +6,27 @@
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
-
 <h1 class="my-4">Management</h1>
-
 <h4 class="mb-4">Upload Image</h4>
-
-<div class="card bg-light">
+<div class="card">
     <div class="card-body">
         <form method="POST" enctype="multipart/form-data" class="md-form">
-            <label for="browse" class="btn btn-dark">
-                <input type="file" name="images" id="browse" class="d-none" onchange="document.getElementById('filename').innerHTML = this.files[0].name;">
-                Browse
-            </label>
-            <span id="filename" class="text-muted ml-2">Only .png and .jpg files.</span>
-        	<br><br>
-            <input type="submit" name="upload" value="Upload" class="btn btn-dark">
+            <div class="form-group my-4">
+                <input class="form-control" type="file" id="browse" name="images">
+                <small class="form-text text-muted">Only .png and .jpg files</small>
+            </div>
+            <input type="submit" name="upload" value="Upload" class="btn btn-outline-secondary my-3" id="upload">
         </form>
     </div>
 </div>
-
-<table class="table border-bottom my-5">
+<table class="table border-bottom my-4">
     <?php foreach ($images as $image): ?>
         <tr>
             <td class="w-50">
-                <img class="mw-100" src="<?php echo '/uploads/'.$image['filename']; ?>" alt="<?php echo $image['filename']; ?>">
+                <img class="mw-100" src="/uploads/<?php echo $image['filename'];?>" alt="<?php echo $image['filename']; ?>">
             </td>
             <td class="w-50">
-                <div class="font-weight-bold">
+                <div class="fw-bold">
                     <?php echo $image['username']; ?>&nbsp;&lt;<?php echo $image['email']; ?>&gt;
                 </div>
                 <?php if ($image['username'] == $_SESSION['username']): ?>
@@ -40,7 +34,7 @@
                         <form method="POST">
                             <input type="hidden" name="id" value="<?php echo $image['id'] ?>">
                             <input type="hidden" name="image" value="<?php echo $image['filename'] ?>">
-                            <button type="submit" name="remove" class="btn btn-danger" formaction="/management/remove/">Remove Image</button>
+                            <button type="submit" name="remove" class="btn btn-outline-danger" formaction="/management/remove/">Remove Image</button>
                         </form>
                     </div>
                 <?php endif; ?>
@@ -48,3 +42,9 @@
         </tr>
     <?php endforeach; ?>
 </table>
+<script>
+  const browseInput = document.querySelector('#browse');
+  browseInput.addEventListener('change', () => {
+    browseInput.textContent = this.files[0].name;
+  });
+</script>

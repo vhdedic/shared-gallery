@@ -17,13 +17,10 @@ class User
      */
     public function registerUser()
     {
-        // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            // Call Validation model
             $validation = new Validation;
 
-            // Validate register form
             $validation->validate(array(
                 'username' => array(
                     'required' => true,
@@ -48,13 +45,11 @@ class User
                 )
             ));
 
-            // Execute query if validation pass
             if ($validation->validate() == true) {
 
                 $database = Database::getInstance();
                 $sth = $database->prepare("INSERT INTO user (username, email, password) VALUES (:username, :email, :password)");
 
-                // Hashing password before store to database
                 $hashedpassword = password_hash($_POST['password'], PASSWORD_ARGON2I);
 
                 $sth->bindParam(':username', $_POST['username']);
@@ -63,7 +58,6 @@ class User
 
                 $sth->execute();
 
-                // Redirect to login page after registration
                 header('Location: /login/index/');
                 exit();
             }
@@ -77,13 +71,10 @@ class User
      */
     public function loginUser()
     {
-        // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            // Call Validation model
             $validation = new Validation;
 
-            // Validate login form
             $validation->validate(array(
                 'username' => array(
                     'required' => true
@@ -93,7 +84,6 @@ class User
                 )
             ));
 
-            // Execute query if validation pass
             if ($validation->validate() == true) {
 
                 $database = Database::getInstance();
@@ -105,21 +95,17 @@ class User
 
                 $userdata = $sth->fetch();
 
-                // Store "remember_username" cookie if $_POST["remember_me"] is checked
                 if(!empty($_POST["remember_me"])){
                     setcookie ("remember_username",$_POST["username"],time()+ 1296000);
                 }
 
-                // Check username and password
                 if(empty($userdata)){
                     array_push(Validation::$errors, 'Access denied');
 
                 } elseif (password_verify($_POST['password'], $userdata['password'])){
 
-                    // Get username
                     $_SESSION['username'] = $userdata['username'];
 
-                    // Redirect to management page after login
                     header('Location: /management/index/');
                     exit();
 
@@ -137,13 +123,10 @@ class User
      */
     public function changePassword()
     {
-        // Check if $_SERVER['REQUEST_METHOD'] == 'POST'
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            // Call Validation model
             $validation = new Validation;
 
-            // Validate change password form
             $validation->validate(array(
                 'old_password' => array(
                     'required' => true
@@ -159,33 +142,26 @@ class User
                 ),
             ));
 
-            // Execute queries if validation pass
             if ($validation->validate() == true) {
 
-                // Get username
                 $username = $_SESSION['username'];
 
-                // Get old password from database
                 $database = Database::getInstance();
                 $sth_old = $database->query("SELECT password FROM user WHERE username = '$username'");
                 $sth_old->execute();
 
                 $old_password = $sth_old->fetchColumn();
 
-                // Change password
                 $sth_new = $database->prepare("UPDATE user SET password = :new_password WHERE username = '$username'");
 
-                // Old password verify
                 if (password_verify($_POST['old_password'], $old_password)) {
 
-                    // Hashing new password before store to database
                     $hashednewpassword = password_hash($_POST['new_password'], PASSWORD_ARGON2I);
 
                     $sth_new->bindParam(':new_password', $hashednewpassword);
 
                     $sth_new->execute();
 
-                    // Logout user after change password
                     header('Location: /login/logout/');
                     exit;
 
@@ -203,13 +179,10 @@ class User
      */
     public function removeAccount()
     {
-        // Check if isset $_POST['remove_account'])
         if(isset($_POST['remove_account'])){
 
-            // Get username
             $username = $_SESSION['username'];
 
-            // Remove user images from database
             $database = Database::getInstance();
             $sth = $database->prepare("SELECT image FROM images WHERE user_id = (SELECT id FROM user WHERE username = '$username')");
 
@@ -217,18 +190,15 @@ class User
 
             $images = $sth->fetchAll();
 
-            // Remove user images from upload map
             foreach ($images as $image) {
                 unlink(ROOT.'uploads/'.$image['image']);
             }
 
-            // Remove user account in database
             $database = Database::getInstance();
             $sth_del = $database->prepare("DELETE FROM user WHERE username = '$username'");
 
             $sth_del->execute();
 
-            // Logout removed user account
             header('Location: /login/logout/');
             exit;
         }

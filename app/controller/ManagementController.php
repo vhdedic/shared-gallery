@@ -19,14 +19,11 @@ class ManagementController
      */
     function index()
     {
-        // Check if user logged
         if (isset($_SESSION['username'])) {
 
-            // Call uploadImage() for image upload
             $img = new Image;
             $img->uploadImage();
 
-            // Call View model
             $view = new View;
             $view->render('layout', 'management', $args = [
                 'images' => $img->getImages(),
@@ -46,8 +43,8 @@ class ManagementController
      */
     function remove()
     {
-        // Call imageRemove() for remove image in database and upload map
-        Image::imageRemove();
+        $image = new Image;
+        $image->imageRemove();
 
         header('Location: /management/index/');
         exit();

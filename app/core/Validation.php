@@ -22,17 +22,14 @@ class Validation
      */
     public static function validate($fields = array())
     {
-        // Get form field name and all rules for field
         foreach ($fields as $field => $rules) {
 
             $field = htmlentities($field, ENT_QUOTES, 'UTF-8');
             $value = trim($_POST[$field]);
             $database = Database::getInstance();
 
-            // Get one rule and rule value for field
             foreach ($rules as $rule => $rule_value) {
 
-                // Validate field
                 if ($rule === 'required' && empty($value)) {
                     array_push(Self::$errors, 'Field '.$field.' is required');
 
@@ -71,7 +68,6 @@ class Validation
             }
         }
 
-        // Validation passed if $errors empty
         if (empty(Self::$errors)) {
             $valid = true;
 
@@ -79,7 +75,6 @@ class Validation
             $valid = false;
         }
 
-        // Return validation result
         return $valid;
     }
 
@@ -90,7 +85,6 @@ class Validation
      */
     public static function notifications()
     {
-        // $errors as $notifications
         $notifications = Self::$errors;
         return $notifications;
     }

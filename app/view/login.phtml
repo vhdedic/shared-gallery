@@ -6,23 +6,21 @@
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
-
 <h1 class="my-4">Login</h1>
-
-<div class="card bg-light">
+<div class="card">
     <div class="card-body">
         <form method="post">
-            <div class="form-group">
+            <div class="form-group my-3">
                 <label for="username">Username:</label>
                 <input type="text" class="form-control" name="username" value="<?php echo (isset($_COOKIE['remember_username'])) ?  $_COOKIE['remember_username'] : ''; ?>">
                 <small class="form-text text-muted">required</small>
             </div>
-            <div class="form-group">
+            <div class="form-group my-3">
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" name="password">
                 <small class="form-text text-muted">required</small>
             </div>
-            <div class="form-group">
+            <div class="form-group my-3">
                 <a href="/registration/index/">Not registered? Create an account</a>
             </div>
             <div class="form-group form-check">
@@ -31,7 +29,7 @@
                     Remember me
                 </label>
             </div>
-            <button type="submit" class="btn btn-dark"  name="submit">Submit</button>
+            <button type="submit" class="btn btn-outline-secondary my-3" name="submit">Submit</button>
         </form>
     </div>
 </div>

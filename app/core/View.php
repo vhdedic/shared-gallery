@@ -20,14 +20,12 @@ class View
         ob_start();
         extract($args);
 
-        // Include view
-        include ROOT.'app/view/'.$name.'.phtml';
+        include APP.'app/view/'.$name.'.phtml';
 
-        // Get buffer content
         $content = ob_get_contents();
         ob_get_clean();
 
-        include ROOT.'app/view/'.$layout.'.phtml';
+        include APP.'app/view/'.$layout.'.phtml';
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Core\Database;
+use App\Core\Validation;
 
 /**
  * Image model
@@ -16,18 +17,14 @@ class Image
      */
     public function uploadImage()
     {
-        // Check if isset ($_POST['upload'])
         if (isset($_POST['upload'])) {
 
-            // Upload folder
             $upload = ROOT.'uploads/';
 
-            // $_FILES['images']
             $filename = $_FILES['images']['name'];
             $type = $_FILES['images']['type'];
             $tmp_name = $_FILES['images']['tmp_name'];
 
-            // Get username
             $username = $_SESSION['username'];
 
             if (empty($filename)) {
@@ -76,7 +73,6 @@ class Image
      */
     public function imageRemove()
     {
-        // Check if isset ($_POST['remove'])
         if (isset($_POST['remove'])) {
 
             $image_id = $_POST['id'];
@@ -85,7 +81,7 @@ class Image
             $database = Database::getInstance();
             $sth = $database->prepare("DELETE FROM image WHERE id=$image_id");
 
-            unlink(ROOT.'uploads/'.$image_name);
+            unlink('uploads/'.$image_name);
 
             $sth->execute();
         }
@@ -105,5 +101,4 @@ class Image
 
         echo $count;
     }
-
 }

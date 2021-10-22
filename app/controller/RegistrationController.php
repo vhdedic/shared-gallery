@@ -19,18 +19,15 @@ class RegistrationController
      */
     function index()
     {
-        // Check if user logged
         if (isset($_SESSION['username'])) {
             header('Location: /home/index/');
             exit();
 
         } else {
 
-            // Call registerUser() for user registration
             $user = new User;
             $user->registerUser();
 
-            // Call View model
             $view = new View;
             $view->render('layout', 'registration', $args = [
                 'notifications' => Validation::notifications(),

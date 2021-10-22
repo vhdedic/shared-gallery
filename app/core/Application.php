@@ -9,10 +9,8 @@ class Application
 {
     function run()
     {
-        // Start session
         session_start();
 
-        // Get controller prefix as $file and method as $action from REQUEST_URI
         if ($_SERVER["REQUEST_URI"] == '/'){
 
             $file = 'home';

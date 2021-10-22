@@ -18,18 +18,15 @@ class LoginController
      */
     function index()
     {
-        // Check if user logged
         if (isset($_SESSION['username'])) {
             header('Location: /home/index/');
             exit();
 
         } else {
 
-            // Call loginUser() for login user
             $user = new User;
             $user->loginUser();
 
-            // Call View model
             $view = new View;
 
             $view->render('layout', 'login', $args = [
@@ -46,7 +43,6 @@ class LoginController
     function logout()
     {
         unset($_SESSION['username']);
-
         header('Location: /login/index/');
         exit();
     }

@@ -19,14 +19,11 @@ class MyAccountController
      */
     function index()
     {
-        // Check if user logged
         if (isset($_SESSION['username'])) {
 
-            // Call changePassword() for change user password
             $user = new User;
             $user->changePassword();
 
-            // Call View model
             $view = new View;
             $view->render('layout', 'myAccount', $args = [
                 'notifications' => Validation::notifications(),
@@ -45,7 +42,6 @@ class MyAccountController
      */
     function remove()
     {
-        // Call removeAccount() for remove user account
         $user = new User;
         $user->removeAccount();
     }

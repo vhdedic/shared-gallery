@@ -15,7 +15,7 @@ class Config
      */
     public static function getParams($key)
     {
-        $config = include ROOT.'app/config.php';
+        $config = include APP.'app/config.php';
 
         return $config[$key];
     }

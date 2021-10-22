@@ -64,7 +64,6 @@ class Database
          */
         $dbpass = Config::getParams('db_password');
 
-        // Connect to database
         try {
             $this->conn = new PDO("mysql:host=$dbhost;dbname=$dbname;charset=$dbchar", $dbuser, $dbpass);
 
@@ -84,7 +83,6 @@ class Database
             self::$instance = new Database();
         }
 
-        // Get connection
         return self::$instance->conn;
     }
 }
