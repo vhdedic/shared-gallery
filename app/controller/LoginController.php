@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\View;
 use App\Model\User;
 use App\Core\Validation;
+
 /**
  * LoginController controller
  */
@@ -29,7 +30,7 @@ class LoginController
 
             $view = new View;
 
-            $view->render('layout', 'login', $args = [
+            $view->render('layout', 'login', [
                 'notifications' => Validation::notifications(),
             ]);
         }

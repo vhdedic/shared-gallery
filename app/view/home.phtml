@@ -1,16 +1,12 @@
-<h1 class="my-5 text-center">Number images in Shared Gallery: </h1>
-<h2 id="num" class="text-center">Click Images button</h2>
-<hr class="my-5">
-<div class="text-center">
-    <button type="button" class="btn btn-outline-secondary" id="btn">Images</button>
+<h1 class="my-5">Home</h1>
+<button type="button" class="btn btn-outline-secondary" id="btn">Count Images</button>
 <script>
-  const num = document.querySelector('#num');
   const btn = document.querySelector('#btn');
   btn.addEventListener('click', () => {
     fetch('/home/images/')
     .then(response => response.json())
     .then((result) => {
-      num.textContent = result;
+      btn.textContent = result + ' image(s)';
     });
   });
 </script>
